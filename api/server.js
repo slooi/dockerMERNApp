@@ -1,6 +1,9 @@
 const express = require("express")
 const PORT = process.env.PORT || 8000
 const app = express()
+const mongoose = require("mongoose")
+
+mongoose.connect(`mongodb://${"localhost"}:27017/metro`).then(res=>console.log("MONGODB CONNECTION!")).catch(err=>{throw new Error("ERROR could not connect to db!")})
 
 app.get("/",(req,res)=>{
 	res.send("Helloas!")

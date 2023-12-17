@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  server:
+    build: ./api
+    container_name: "express_server"
+    ports:
+     - "8000:8000"
+    volumes:
+     - ./api:/usr/src/app
+     - /usr/src/app/node_modules
+  client:
+    build: ./client
+    container_name: "client"
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules

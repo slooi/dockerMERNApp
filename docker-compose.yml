@@ -8,6 +8,10 @@ services:
     volumes:
      - ./api:/usr/src/app
      - /usr/src/app/node_modules
+    depends_on:
+     - db
+    environment:
+     - DB_HOST=db  # Use the service name 'db' as the hostname
   client:
     build: ./client
     container_name: "client"
@@ -18,3 +22,15 @@ services:
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
+    depends_on:
+      - server
+  db:
+    build: ./db
+    container_name: "db"
+    ports:
+     - "27017:27017"
+    logging:
+      driver: "none"
+    command:  # This hides the mongodb outputs
+     - '--logpath'
+     - '/var/log/mongodb/mongod.log'

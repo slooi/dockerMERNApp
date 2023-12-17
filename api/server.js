@@ -3,13 +3,34 @@ const PORT = process.env.PORT || 8000
 const app = express()
 const mongoose = require("mongoose")
 
-mongoose.connect(`mongodb://${"localhost"}:27017/metro`).then(res=>console.log("MONGODB CONNECTION!")).catch(err=>{throw new Error("ERROR could not connect to db!")})
+const PropertySchema = new mongoose.Schema({
+	streetAddress:{
+		type: String,
+		required: true
+	}
+},{strict:true})
+const ModelProperties = mongoose.model("properties",PropertySchema)
+
+
+async function connectToDb(){
+	console.log("Trying to connect to db")
+	await mongoose.connect(`mongodb://${process.env.DB_HOST || "localhost"}:27017/metro_db`).then(res=>console.log("MONGODB CONNECTION!")).catch(err=>{throw new Error("ERROR could not connect to db!")})
+
+	
+}
+connectToDb()
+
+
 
 app.get("/",(req,res)=>{
 	res.send("Helloas!")
 })
 app.get("/api",(req,res)=>{
+	const getModelProperties = async() => {
+		console.log("ModelProperties.find()",await ModelProperties.find())
+	}
 	console.log("/api hit!")
+	getModelProperties()
 	res.json({data:"working"})
 })
 

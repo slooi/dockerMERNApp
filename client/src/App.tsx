@@ -12,7 +12,7 @@ function App() {
 				const json = await response.json()
 				console.log("json \t", json)
 
-				setServerMessage(json.data)
+
 			} catch (err) {
 				throw new Error(`${err}`)
 			}

@@ -36,3 +36,20 @@ export default defineConfig({
 	}
 })
 ```
+
+3) USE ENVIRONMENT variable for mongodb! Do NOT use localhost!!!
+
+entry.js
+```js
+await mongoose.connect(`mongodb://${process.env.DB_HOST || "localhost"}:27017/metro_db`)
+```
+docker-compose.yml
+```yml
+    environment:
+     - DB_HOST=db  # Use the service name 'db' as the hostname
+```
+
+
+############# WARNING ####
+I turned off my mongodb service for this
+

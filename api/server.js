@@ -25,13 +25,11 @@ connectToDb()
 app.get("/",(req,res)=>{
 	res.send("Helloas!")
 })
-app.get("/api",(req,res)=>{
-	const getModelProperties = async() => {
-		console.log("ModelProperties.find()",await ModelProperties.find())
-	}
+app.get("/api",async (req,res)=>{
 	console.log("/api hit!")
-	getModelProperties()
-	res.json({data:"working"})
+	const properties = await ModelProperties.find()
+	console.log("ModelProperties.find()",properties)
+	res.json({data:properties})
 })
 
 app.get("/api/1",(req,res)=>{
